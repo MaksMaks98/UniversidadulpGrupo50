@@ -154,6 +154,12 @@ public class vistasMenu extends javax.swing.JFrame {
 
     private void jMitemAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMitemAlumnoActionPerformed
         
+    escritorio.removeAll () ;
+        escritorio.repaint();
+        GestionDeAlumno gestionalumno = new GestionDeAlumno ();
+        gestionalumno.setVisible(true);
+        escritorio.add(gestionalumno);
+        escritorio.moveToFront(gestionalumno);   
         
     }//GEN-LAST:event_jMitemAlumnoActionPerformed
 

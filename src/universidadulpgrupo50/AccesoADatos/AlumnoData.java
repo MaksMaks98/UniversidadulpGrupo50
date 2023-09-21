@@ -23,7 +23,7 @@ public class AlumnoData {
 }
     public void guardarAlumno(Alumno alumno){
        
-        String sql ="INSERT INTO alumno(dni,apellido,nombre,fechaNacimiento,estado) VALUES(?,?,?,?,?)";
+        String sql ="INSERT INTO alumno VALUES(null,?,?,?,?,?)";
         try {
             PreparedStatement ps=con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, alumno.getDni());
@@ -34,16 +34,13 @@ public class AlumnoData {
             ps.executeUpdate();
             ResultSet rs=ps.getGeneratedKeys();
             if (rs.next()) {
-                alumno.setIdAlumno(rs.getInt("idAlumno"));
+               alumno.setIdAlumno(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Se ingreso Alumno con exito");
             }
             
             ps.close();
-            
-            
-            
-            
-        } catch (Exception ex) {
+          
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno"+ex.getMessage());
         }
     } 
@@ -178,12 +175,12 @@ public class AlumnoData {
 
 	}
 
-public void eliminarAlumno(int id) { 
+public void eliminarAlumno(int dni) { 
 	try {
             
-	String sql = "UPDATE alumno SET estado = 0 WHERE idAlumno = ? ";
+	String sql = "UPDATE alumno SET estado = 0 WHERE dni = ? ";
 	PreparedStatement ps = con.prepareStatement(sql);
-	ps.setInt(1, id);
+	ps.setInt(1, dni);
         
 	int fila=ps.executeUpdate(); 
         

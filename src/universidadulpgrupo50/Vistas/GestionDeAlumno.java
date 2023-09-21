@@ -5,16 +5,26 @@
  */
 package universidadulpgrupo50.Vistas;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.LocalDate;
+import java.util.Date;
+
+import javax.swing.JOptionPane;
+import universidadulpgrupo50.AccesoADatos.AlumnoData;
+import universidadulpgrupo50.Entidades.Alumno;
+
 /**
  *
  * @author Carina
  */
-public class GestionDeAlumnos extends javax.swing.JInternalFrame {
+public class GestionDeAlumno extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form GestionDeAlumnos
      */
-    public GestionDeAlumnos() {
+    public GestionDeAlumno() {
         initComponents();
     }
 
@@ -39,7 +49,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
         jRestado = new javax.swing.JRadioButton();
         jDatefechaNa = new com.toedter.calendar.JDateChooser();
         jBbuscar = new javax.swing.JButton();
-        jBnuevo = new javax.swing.JButton();
+        jBModificar = new javax.swing.JButton();
         jBeliminar = new javax.swing.JButton();
         jBguardar = new javax.swing.JButton();
         jBsalir = new javax.swing.JButton();
@@ -58,14 +68,39 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
         jLabelfechana.setText("Fecha de Nacimiento");
 
         jBbuscar.setText("Buscar");
+        jBbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBbuscarActionPerformed(evt);
+            }
+        });
 
-        jBnuevo.setText("Nuevo");
+        jBModificar.setText("Modificar");
+        jBModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBModificarActionPerformed(evt);
+            }
+        });
 
         jBeliminar.setText("Eliminar");
+        jBeliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBeliminarActionPerformed(evt);
+            }
+        });
 
         jBguardar.setText("Guardar");
+        jBguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBguardarActionPerformed(evt);
+            }
+        });
 
         jBsalir.setText("Salir");
+        jBsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBsalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,23 +113,23 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabelnomb)
                                 .addGap(72, 72, 72)
-                                .addComponent(jTnombre))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelapell)
-                                .addGap(72, 72, 72)
-                                .addComponent(jTapellido, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabelesta)
                                 .addGap(61, 61, 61)
                                 .addComponent(jRestado))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabeldocum)
-                                .addGap(55, 55, 55)
-                                .addComponent(jTextFieldoc, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelapell)
+                                    .addComponent(jLabeldocum))
+                                .addGap(49, 49, 49)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldoc, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTapellido, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBbuscar))
                     .addGroup(layout.createSequentialGroup()
@@ -105,7 +140,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jBnuevo)
+                .addComponent(jBModificar)
                 .addGap(18, 18, 18)
                 .addComponent(jBeliminar)
                 .addGap(18, 18, 18)
@@ -142,7 +177,7 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
                     .addComponent(jDatefechaNa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBnuevo)
+                    .addComponent(jBModificar)
                     .addComponent(jBeliminar)
                     .addComponent(jBguardar)
                     .addComponent(jBsalir))
@@ -152,12 +187,92 @@ public class GestionDeAlumnos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    AlumnoData Data1 = new AlumnoData();
+    
+    private void jBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarActionPerformed
+
+        try {
+            int dni = Integer.parseInt(jTextFieldoc.getText());
+            if (Data1.buscarAlumnoPorDni(dni) != null) {
+
+                Alumno alumno = Data1.buscarAlumnoPorDni(dni);
+                jTnombre.setText(alumno.getNombre());
+                jTapellido.setText(alumno.getApellido());
+                jRestado.setSelected(alumno.isEstado());
+                jDatefechaNa.setDate(java.sql.Date.valueOf(alumno.getFechaNacimiento()));
+
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Caracter inválido  " + e);
+        }
+
+
+    }//GEN-LAST:event_jBbuscarActionPerformed
+
+    private void jBsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsalirActionPerformed
+      this.dispose(); 
+    }//GEN-LAST:event_jBsalirActionPerformed
+
+    private void jBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarActionPerformed
+      // int dni = Integer.parseInt(jTextFieldoc.getText());
+        int dni = Integer.parseInt(jTextFieldoc.getText());
+            Alumno alumnoRecuperado = Data1.buscarAlumnoPorDni(dni);       
+      if (alumnoRecuperado != null) {
+                Alumno alumno2 = new Alumno(alumnoRecuperado.getIdAlumno() ,
+                        Integer.parseInt(jTextFieldoc.getText()), 
+                        jTnombre.getText(), jTapellido.getText(), 
+                        jDatefechaNa.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), 
+                        jRestado.isSelected());
+                Data1.modificarAlumno(alumno2);
+      }  else {
+                  JOptionPane.showMessageDialog(null, "No se encontró el alumno con DNI: " + dni);
+
+      }
+      
+        
+        
+    }//GEN-LAST:event_jBModificarActionPerformed
+
+    private void jBguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBguardarActionPerformed
+
+        try {
+            int dni = Integer.parseInt(jTextFieldoc.getText());
+            LocalDate fecha = jDatefechaNa.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            Alumno alumno1 = new Alumno(dni, jTnombre.getText(), jTapellido.getText(), fecha, jRestado.isSelected());
+            Data1.guardarAlumno(alumno1);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, " Error, los datos ingresados son invalidos  " + e);
+        }
+
+
+    }//GEN-LAST:event_jBguardarActionPerformed
+
+    private void jBeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBeliminarActionPerformed
+       
+       try {
+            int dni = Integer.parseInt(jTextFieldoc.getText());
+        if (Data1.buscarAlumnoPorDni(dni)!=null){
+            Data1.eliminarAlumno(dni);
+                      
+        }
+                jTextFieldoc.setText("");
+                jTnombre.setText("");
+                jTapellido.setText("");
+                jRestado.setSelected(false);
+                jDatefechaNa.setDate(null);
+        
+       } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, "Error al eliminar. Por favor, corrobore el DNI e intente de nuevo  " + e);
+       }
+       
+    }//GEN-LAST:event_jBeliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBModificar;
     private javax.swing.JButton jBbuscar;
     private javax.swing.JButton jBeliminar;
     private javax.swing.JButton jBguardar;
-    private javax.swing.JButton jBnuevo;
     private javax.swing.JButton jBsalir;
     private com.toedter.calendar.JDateChooser jDatefechaNa;
     private javax.swing.JLabel jLabel1;
